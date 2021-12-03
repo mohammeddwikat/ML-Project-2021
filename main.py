@@ -1,19 +1,46 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.linear_model import LinearRegression
 
+def showDataOnHistogram(data, bins, xTitle="", yTitle=""):
+    plt.hist(data, bins=bins)
+    plt.xlabel(xTitle)
+    plt.ylabel(yTitle)
+    plt.show()
 
+def showDataOnBarDiagram(xData, yData, xTitle, yTitle, ):
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlabel(xTitle)
+    ax.set_ylabel(yTitle)
+    ax.bar(xData, yData)
+    plt.show()
 
-# plt.plot(MinMaxScaler().fit_transform((np.array(population))[:, np.newaxis]), MinMaxScaler().fit_transform((np.array(coronaCases))[:, np.newaxis]), 'o')
-# plt.show()
+def showCorrelation(x, y, xLabel="", yLabel=""):
+    plt.scatter(x, y, alpha=0.7)
+    plt.xlabel(xLabel)
+    plt.ylabel(yLabel)
+    plt.show()
 
+def transformToNormalDistribution(data):
+    return data.transform([np.sqrt, np.exp, np.log, np.reciprocal])
 
-#pd.DataFrame({"Population":[905], "PopDensity":[6.08], "AgingRatio":[0.02], "ServicesHi":[1], "HealthServ":[0], "Landuse":[2.555], "Commercial":[0], "RoadDensit":[0.193], "GreenAreas":[0.011],"Open_spave": [0.831]})
+# get training set
+trainingData = pd.read_excel(r'../WB.xls')
 
+# get header labels
+labels = trainingData.head()
+
+# get regions names
+regions = trainingData.loc[:,'NAMEEN']
+
+# get features values
+# 'Population', 'PopDensity', 'AgingRatio', 'ServicesHi', 'HealthServ', 'Landuse', 'Commercial', 'RoadDensit', 'GreenAreas', 'Open_spave'
+features = (trainingData.iloc[:,range(5,15)])
+population, populationDensity, agingRatio, servicesHierarchy, healthServices, landUse, commercial, roadDensity, greenAreas, openSpace = [trainingData.iloc[:,i] for i in range(5,15)]
+
+# get count corona cases
+coronaCases = (trainingData.loc[:,"CORONA__Ca"])
 
 
 # Steps

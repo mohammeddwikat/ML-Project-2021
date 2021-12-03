@@ -1,11 +1,11 @@
-import part1.analyseData as analyseData
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 import joblib
+from main import features, coronaCases
 
 # split data to training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(analyseData.features, analyseData.coronaCases, test_size=0.25, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(features, coronaCases, test_size=0.25, random_state=0)
 
 # Decision Tree Predictor Model
 DT_model = DecisionTreeRegressor().fit(X_train, y_train)
