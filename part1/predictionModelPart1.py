@@ -29,9 +29,9 @@ print("K-Nearest Regressor model score using R^2:", cross_val_score(neigh, featu
 print("K-Nearest Regressor model score using cross validation:", neigh.score(X_test, y_test))
 
 # Save models
-filename = "regressionModel.joblib"
-joblib.dump(reg, filename)
-filename = "DecisionTreeModel.joblib"
-joblib.dump(DT_model, filename)
-filename = "K-NearestModel.joblib"
-joblib.dump(neigh, filename)
+# filename = "regressionModel.joblib"
+# joblib.dump(reg, filename)
+# filename = "DecisionTreeModel.joblib"
+# joblib.dump(DT_model, filename)
+# filename = "K-NearestModel.joblib"
+# joblib.dump(neigh, filename)

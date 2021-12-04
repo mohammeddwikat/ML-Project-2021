@@ -1,5 +1,5 @@
 import pandas as pd
-from main import features, showCorrelation, coronaCases, trainingData, healthServices, servicesHierarchy, population, landUse, commercial, populationDensity
+from main import features, showCorrelation, coronaCases, trainingData, healthServices, servicesHierarchy, population, landUse, commercial, populationDensity, featuresSeries, boxPlot, getOutliers
 
 # calculate the correlation between features
 pd.set_option('display.max_columns', None)
@@ -20,5 +20,22 @@ for feature in [trainingData.iloc[:,i] for i in range(5,15)]:
     print("correlation {feature} with corona cases: {correlation}".format(feature=feature.name, correlation=feature.corr(coronaCases)))
     showCorrelation(feature, coronaCases, feature.name, "coronaCases")
 
+# Show outliers using box plot for each feature
+for feature in featuresSeries:
+    boxPlot(feature, feature.name, "value")
 
+# get tuples indices that have outliers on features
+outliersIndicesOnFeatures = {}
+for feature in featuresSeries:
+    outliersIndicesOnFeatures[feature.name] = getOutliers(feature)
+print(outliersIndicesOnFeatures)
+
+# get tuple indices that have more than one feature has outlier
+tuplesIndicesHaveOutlier = {}
+for key, indices in outliersIndicesOnFeatures.items():
+    for index in indices:
+        if index in tuplesIndicesHaveOutlier:
+            tuplesIndicesHaveOutlier[index] += 1
+        else:
+            tuplesIndicesHaveOutlier[index] = 1
 

@@ -30,6 +30,7 @@ print("KNN regressor model score using R^2:", knn.score(X_test, y_test))
 # print((trainingData.iloc[:, range(0,5)]).iloc[index])
 # print(DT_model.predict([((trainingData.loc[:, list(labels)[5:15]]).iloc[index])]))
 # print(reg.predict([((trainingData.loc[:, list(labels)[5:15]]).iloc[index])]))
+# print(knn.predict([((trainingData.loc[:, list(labels)[5:15]]).iloc[index])]))
 
 # coefficients for linear regression
 print(reg.coef_)
@@ -40,3 +41,5 @@ iris = load_iris()
 X, y = iris.data, iris.target
 tree.plot_tree(DT_model)
 plt.show()
+
+
