@@ -1,5 +1,7 @@
 import pandas as pd
-from main import features, showCorrelation, coronaCases, trainingData, healthServices, servicesHierarchy, population, landUse, commercial, populationDensity, featuresSeries, boxPlot, getOutliers
+from main import features, showCorrelation, coronaCases, trainingData, healthServices, servicesHierarchy, population, landUse, commercial, populationDensity, featuresSeries, boxPlot, getOutliers, euclideanDistance
+from tabulate import tabulate
+import xlsxwriter
 
 # calculate the correlation between features
 pd.set_option('display.max_columns', None)
@@ -39,3 +41,18 @@ for key, indices in outliersIndicesOnFeatures.items():
         else:
             tuplesIndicesHaveOutlier[index] = 1
 
+# find the dissimilarity between tuples
+table = []
+for index, tuple1 in features.iterrows():
+    row = [index]
+    for _, tuple2 in features.iterrows():
+        row.append(euclideanDistance(list(tuple1), list(tuple2)))
+    table.append(row)
+
+# export the table on excel sheet
+workbook = xlsxwriter.Workbook('dissimilarityMatrix.xlsx')
+worksheet = workbook.add_worksheet()
+row = 0
+for col, data in enumerate(table):
+    worksheet.write_column(row, col, data)
+workbook.close()

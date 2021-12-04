@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import math
 
 def showDataOnHistogram(data, bins, xTitle="", yTitle=""):
     plt.hist(data, bins=bins)
@@ -45,6 +46,9 @@ def getOutliers(data):
             indices.append(key)
     print("Number of outliers in", data.name, countOutlieres)
     return indices
+
+def euclideanDistance(x, y):
+  return math.sqrt(sum([(a-b)**2 for a, b in zip(x, y)]))
 
 # get training set
 trainingData = pd.read_excel(r'../WB.xls')

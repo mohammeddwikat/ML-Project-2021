@@ -7,13 +7,16 @@ for feature in featuresSeries:
         countMissingValues += 1 if value is None else 0
 for case in coronaCases:
     countMissingValues += 1 if case is None else 0
-    
+
 print("Number of Missing values", countMissingValues)
 
 # Drop redundant tuples and get the number of duplicated records
 numberOfOldRecords = len(trainingData)
 trainingData.drop_duplicates(subset=list(labels)[4:15], keep=False, inplace=True)
 print("Number of duplicated records", numberOfOldRecords - len(trainingData))
+
+
+
 
 
 # some tuples have incorrect population
