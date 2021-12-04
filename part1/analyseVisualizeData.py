@@ -1,6 +1,5 @@
 import pandas as pd
 from main import features, showCorrelation, coronaCases, trainingData, healthServices, servicesHierarchy, population, landUse, commercial, populationDensity, featuresSeries, boxPlot, getOutliers, euclideanDistance
-from tabulate import tabulate
 import xlsxwriter
 
 # calculate the correlation between features
@@ -46,7 +45,7 @@ table = []
 for index, tuple1 in features.iterrows():
     row = [index]
     for _, tuple2 in features.iterrows():
-        row.append(euclideanDistance(list(tuple1), list(tuple2)))
+        row.append(euclideanDistance(tuple1, tuple2))
     table.append(row)
 
 # export the table on excel sheet
