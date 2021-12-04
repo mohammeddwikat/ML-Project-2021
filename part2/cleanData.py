@@ -1,10 +1,13 @@
-from main import trainingData, features, coronaCases, labels
+from main import trainingData, featuresSeries, coronaCases, labels
 
 # Count missing values
 countMissingValues = 0
-for feature in [coronaCases, features.loc[:, list(labels)[5:15]]]:
+for feature in featuresSeries:
     for value in feature:
         countMissingValues += 1 if value is None else 0
+for case in coronaCases:
+    countMissingValues += 1 if case is None else 0
+    
 print("Number of Missing values", countMissingValues)
 
 # Drop redundant tuples and get the number of duplicated records
