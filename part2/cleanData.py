@@ -1,4 +1,4 @@
-from main import trainingData, featuresSeries, coronaCases, labels
+from main import trainingData, featuresSeries, coronaCases, labels, getOutliers
 
 # Count missing values
 countMissingValues = 0
@@ -16,19 +16,22 @@ trainingData.drop_duplicates(subset=list(labels)[4:15], keep=False, inplace=True
 print("Number of duplicated records", numberOfOldRecords - len(trainingData))
 
 # Handle Noisy data by using smoothing by mean
-for label in list(labels)[4:15]:
-    if label in ["ServicesHi", "AgingRatio"]:
+for label in list(labels)[5:15]:
+    if label in ["ServicesHi", "AgingRatio", "HealthServ", "Commercial"]:
         continue
     trainingData.sort_values(by=[label])
     feature = list(trainingData.loc[:, label])
     for i in range(0, 187, 5):
-        print(i, end=" ")
         feature[i: i+5] = [sum(feature[i: i+5]) / len(feature[i: i+5]) for i in range(0, 5)]
     feature[190] = sum(feature[187: 191]) / len(feature[187: 191])
     trainingData[label] = feature
-print(trainingData)
-# trainingData.to_excel("trainingDataAfterHandling.xlsx")
+# print(trainingData)
+trainingData.to_excel("trainingDataAfterHandling.xlsx")
 
+# get number of outliers for each feature after smoothing
+outliersIndicesOnFeatures = {}
+for feature in [trainingData.iloc[:, i] for i in range(4, 15)]:
+    getOutliers(feature)
 
 # some tuples have incorrect population
 # remove tuples have corona cases higher than population
