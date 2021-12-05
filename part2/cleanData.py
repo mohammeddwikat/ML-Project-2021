@@ -15,8 +15,19 @@ numberOfOldRecords = len(trainingData)
 trainingData.drop_duplicates(subset=list(labels)[4:15], keep=False, inplace=True)
 print("Number of duplicated records", numberOfOldRecords - len(trainingData))
 
-
-
+# Handle Noisy data by using smoothing by mean
+for label in list(labels)[4:15]:
+    if label in ["ServicesHi", "AgingRatio"]:
+        continue
+    trainingData.sort_values(by=[label])
+    feature = list(trainingData.loc[:, label])
+    for i in range(0, 187, 5):
+        print(i, end=" ")
+        feature[i: i+5] = [sum(feature[i: i+5]) / len(feature[i: i+5]) for i in range(0, 5)]
+    feature[190] = sum(feature[187: 191]) / len(feature[187: 191])
+    trainingData[label] = feature
+print(trainingData)
+# trainingData.to_excel("trainingDataAfterHandling.xlsx")
 
 
 # some tuples have incorrect population

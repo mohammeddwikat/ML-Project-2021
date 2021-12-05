@@ -1,6 +1,7 @@
 /.idea
 WB.csv
 WB.xls
+trainingDataAfterHandling.xlsx
 test.py
 ### Python template
 # Byte-compiled / optimized / DLL files
