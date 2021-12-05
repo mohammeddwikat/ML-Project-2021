@@ -1,8 +1,8 @@
-from main import trainingData, featuresSeries, coronaCases, labels, getOutliers
+from main import trainingData, coronaCases, labels, getOutliers
 
 # Count missing values
 countMissingValues = 0
-for feature in featuresSeries:
+for feature in [trainingData.iloc[:, i] for i in range(4, 15)]:
     for value in feature:
         countMissingValues += 1 if value is None else 0
 for case in coronaCases:
@@ -16,8 +16,14 @@ trainingData.drop_duplicates(subset=list(labels)[4:15], keep=False, inplace=True
 print("Number of duplicated records", numberOfOldRecords - len(trainingData))
 
 # Handle Noisy data by using smoothing by mean
-for label in list(labels)[5:15]:
-    if label in ["ServicesHi", "AgingRatio", "HealthServ", "Commercial"]:
+for label in list(labels)[4:15]:
+    if label in ["CORONA__Ca", "ServicesHi", "PopDensity","HealthServ", "Commercial"]:
+        trainingData.sort_values(by=[label])
+        feature = list(trainingData.loc[:, label])
+        for i in range(0, 187, 3):
+            feature[i: i + 3] = [sum(feature[i: i + 3]) / len(feature[i: i + 3]) for i in range(0, 3)]
+        feature[190] = sum(feature[189: 191]) / len(feature[189: 191])
+        trainingData[label] = feature
         continue
     trainingData.sort_values(by=[label])
     feature = list(trainingData.loc[:, label])
@@ -40,3 +46,5 @@ for feature in [trainingData.iloc[:, i] for i in range(4, 15)]:
 # remove data that have service hierarchy 0 or change it to 1
 # eliminate Commercial services because the population is actor in computing it
 #
+
+

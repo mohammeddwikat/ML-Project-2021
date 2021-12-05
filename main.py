@@ -63,7 +63,6 @@ regions = trainingData.loc[:,'NAMEEN']
 # 'Population', 'PopDensity', 'AgingRatio', 'ServicesHi', 'HealthServ', 'Landuse', 'Commercial', 'RoadDensit', 'GreenAreas', 'Open_spave'
 features = (trainingData.iloc[:,range(5,15)])
 population, populationDensity, agingRatio, servicesHierarchy, healthServices, landUse, commercial, roadDensity, greenAreas, openSpace = [trainingData.iloc[:,i] for i in range(5,15)]
-featuresSeries = [population, populationDensity, agingRatio, servicesHierarchy, healthServices, landUse, commercial, roadDensity, greenAreas, openSpace]
 
 # get count corona cases
 coronaCases = (trainingData.loc[:,"CORONA__Ca"])
