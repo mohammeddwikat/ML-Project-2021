@@ -50,6 +50,22 @@ def getOutliers(data):
 def euclideanDistance(x, y):
   return math.sqrt(sum([(a-b)**2 for a, b in zip(x, y)]))
 
+def getFeaturesIndeicesHaveOutliers (trainingData):
+    outliersIndicesOnFeatures = {}
+    for feature in [trainingData.iloc[:,i] for i in range(4,15)]:
+        outliersIndicesOnFeatures[feature.name] = getOutliers(feature)
+    return outliersIndicesOnFeatures
+
+def getTuplesIndicesHaveOutliers (indicesOutliersFeatuers):
+    tuplesIndicesHaveOutlier = {}
+    for key, indices in indicesOutliersFeatuers.items():
+        for index in indices:
+            if index in tuplesIndicesHaveOutlier:
+                tuplesIndicesHaveOutlier[index] += 1
+            else:
+                tuplesIndicesHaveOutlier[index] = 1
+    return tuplesIndicesHaveOutlier
+
 # get training set
 trainingData = pd.read_excel(r'../WB.xls')
 

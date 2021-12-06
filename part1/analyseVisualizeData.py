@@ -1,5 +1,7 @@
 import pandas as pd
-from main import features, showCorrelation, coronaCases, trainingData, healthServices, servicesHierarchy, population, landUse, commercial, populationDensity, boxPlot, getOutliers, euclideanDistance
+from main import features, showCorrelation, coronaCases, trainingData, healthServices,\
+    servicesHierarchy, population, landUse, commercial, populationDensity, boxPlot, getOutliers, euclideanDistance,\
+    getFeaturesIndeicesHaveOutliers, getTuplesIndicesHaveOutliers
 import xlsxwriter
 
 # calculate the correlation between features
@@ -25,20 +27,12 @@ for feature in [trainingData.iloc[:,i] for i in range(5,15)]:
 for feature in [trainingData.iloc[:,i] for i in range(4,15)]:
     boxPlot(feature, feature.name, "value")
 
-# get tuples indices that have outliers on features
-outliersIndicesOnFeatures = {}
-for feature in [trainingData.iloc[:,i] for i in range(4,15)]:
-    outliersIndicesOnFeatures[feature.name] = getOutliers(feature)
+# get indices data that have outliers on features
+outliersIndicesOnFeatures = getFeaturesIndeicesHaveOutliers(trainingData)
 print(outliersIndicesOnFeatures)
 
-# get tuple indices that have more than one feature has outlier
-tuplesIndicesHaveOutlier = {}
-for key, indices in outliersIndicesOnFeatures.items():
-    for index in indices:
-        if index in tuplesIndicesHaveOutlier:
-            tuplesIndicesHaveOutlier[index] += 1
-        else:
-            tuplesIndicesHaveOutlier[index] = 1
+# get tuples indices that have outliers
+print("Number of Tuples have outliers", len(getTuplesIndicesHaveOutliers(outliersIndicesOnFeatures)))
 
 # find the dissimilarity between tuples
 table = []

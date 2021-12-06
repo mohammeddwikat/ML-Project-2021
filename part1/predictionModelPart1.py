@@ -25,8 +25,8 @@ print("Regression model Score using cross validation", cross_val_score(reg, feat
 # K-Nearest Regressor
 neigh = KNeighborsRegressor(n_neighbors=11)
 neigh.fit(X_train, y_train)
-print("K-Nearest Regressor model score using R^2:", cross_val_score(neigh, features, coronaCases, cv=5).mean())
-print("K-Nearest Regressor model score using cross validation:", neigh.score(X_test, y_test))
+print("K-Nearest Regressor model score using R^2:", neigh.score(X_test, y_test))
+print("K-Nearest Regressor model score using cross validation:", cross_val_score(neigh, features, coronaCases, cv=5).mean())
 
 # Save models
 filename = "regressionModel.joblib"
