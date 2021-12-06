@@ -83,6 +83,7 @@ population, populationDensity, agingRatio, servicesHierarchy, healthServices, la
 # get count corona cases
 coronaCases = (trainingData.loc[:,"CORONA__Ca"])
 
+trainingDataCleanedManually = pd.read_excel(r'../WB-handledManually.xls')
 
 # Steps
 # - read data

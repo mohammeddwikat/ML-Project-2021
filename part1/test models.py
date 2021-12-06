@@ -16,7 +16,7 @@ features = trainingData.iloc[:,range(5,15)]
 coronaCases = trainingData.iloc[:, [4]]
 
 # get test and training data
-_, X_test, __, y_test = train_test_split(features, coronaCases, test_size=0.25)
+_, X_test, __, y_test = train_test_split(features, coronaCases, test_size=0.25, random_state= 42)
 
 # Models score using cross validation
 scores = cross_val_score(DT_model, features, coronaCases, cv=5)
@@ -37,14 +37,14 @@ print("KNN regressor model score using R^2:", knn.score(X_test, y_test))
 # print(reg.predict([((trainingData.loc[:, list(labels)[5:15]]).iloc[index])]))
 # print(knn.predict([((trainingData.loc[:, list(labels)[5:15]]).iloc[index])]))
 
-# # coefficients for linear regression
-# print(reg.coef_)
-# print(reg.intercept_)
-#
-# # Visualize the decision tree
-# iris = load_iris()
-# X, y = iris.data, iris.target
-# tree.plot_tree(DT_model)
-# plt.show()
+# coefficients for linear regression
+print(reg.coef_)
+print(reg.intercept_)
+
+# Visualize the decision tree
+iris = load_iris()
+X, y = iris.data, iris.target
+tree.plot_tree(DT_model)
+plt.show()
 
 

@@ -3,14 +3,7 @@ from main import trainingData, coronaCases, labels,\
 import pandas as pd
 
 # Count missing values
-countMissingValues = 0
-for feature in [trainingData.iloc[:, i] for i in range(4, 15)]:
-    for value in feature:
-        countMissingValues += 1 if value is None else 0
-for case in coronaCases:
-    countMissingValues += 1 if case is None else 0
-
-print("Number of Missing values", countMissingValues)
+print("Number of Missing values", trainingData.isna().sum().sum())
 
 # Drop redundant tuples and get the number of duplicated records
 numberOfOldRecords = len(trainingData)
@@ -20,7 +13,7 @@ temporalTrainingData = trainingData.copy()
 
 # Handle Noisy data by using smoothing by median
 for label in list(labels)[4:15]:
-    if label in ["Open_spave", "Landuse", "ServicesHi", "PopDensity"]:
+    if label in ["Open_spave", "Landuse", "PopDensity", "ServicesHi"]:
         continue
     temporalTrainingData = temporalTrainingData.sort_values(by=[label])
     feature = list(temporalTrainingData.loc[:, label])
@@ -29,7 +22,7 @@ for label in list(labels)[4:15]:
         feature[i: i + 5] = [temporal[(i + 2) // 2] for j in range(5)]
     feature[190] = feature[188]
     temporalTrainingData[label] = feature
-temporalTrainingData.to_excel("trainingDataAfterHandling.xlsx")
+temporalTrainingData.to_excel("trainingDataAfterHandling.xls")
 
 # get number of tuples have outliers
 print("Number of tuples have outliers after smoothing", len(getTuplesIndicesHaveOutliers(getFeaturesIndeicesHaveOutliers(temporalTrainingData))))
