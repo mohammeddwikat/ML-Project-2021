@@ -9,7 +9,7 @@ from sklearn.decomposition import PCA
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.preprocessing import StandardScaler
-
+import numpy as np
 scaler = StandardScaler()
 
 features = trainingDataCleaned.iloc[:, [5, 8, 9]]
@@ -39,8 +39,7 @@ neigh = KNeighborsClassifier(n_neighbors=5)
 X_train, X_test, y_train, y_test = train_test_split(features_scaled, coronaCases_transformed_categories, test_size=0.3, random_state=0)
 neigh.fit(X_train, y_train)
 print("The accuracy for KNN calssifier using cross validation", cross_val_score(neigh, features_scaled, coronaCases_transformed_categories, cv=5).mean())
-cm = confusion_matrix(neigh.predict(features_scaled), coronaCases_transformed_categories)
+cm = confusion_matrix(neigh.predict(features_scaled), coronaCases_transformed_categories, labels=labels)
 print("The accuracy for KNN classifier using confusion matrix", neigh.score(X_test, y_test))
 sns.heatmap(cm, annot=True, fmt='d')
 plt.show()
-
