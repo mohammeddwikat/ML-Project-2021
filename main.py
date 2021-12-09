@@ -24,7 +24,7 @@ def showCorrelation(x, y, xLabel="", yLabel=""):
     plt.show()
 
 def transformToNormalDistribution(data):
-    return data.transform([np.sqrt, np.exp, np.log, np.reciprocal])
+    return data.transform(np.sqrt)
 
 def boxPlot(data, xLabel="", yLabel=""):
     plt.xlabel(xLabel)
@@ -83,8 +83,8 @@ population, populationDensity, agingRatio, servicesHierarchy, healthServices, la
 # get count corona cases
 coronaCases = (trainingData.loc[:,"CORONA__Ca"])
 
-trainingDataCleanedManually = pd.read_excel(r'../WB-handledManually.xls')
-
+trainingDataCleaned = pd.read_excel(r'../WB-Cleaned.xls')
+trainingDataManual = pd.read_excel(r'../WB-handledManually.xls')
 # Steps
 # - read data
 # - normalize data

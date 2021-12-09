@@ -6,9 +6,7 @@ import xlsxwriter
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
-
-
-
+from scipy.stats import ttest_ind
 
 # show corona cases distribution
 showDataOnHistogram(coronaCases, 190, "Number Of Cases", "Frequency")
@@ -39,6 +37,16 @@ for feature in [trainingData.iloc[:,i] for i in range(5,15)]:
 # heat map describe correlation between variables
 ax = sns.heatmap((trainingData.iloc[:, range(4, 15)]).corr(), annot=True, vmin=0, vmax=1)
 
+# Null Hypothesis significance testing
+d = {}
+for feature in [features.iloc[:, i] for i in range(0, 10)]:
+    res = ttest_ind(feature, coronaCases)
+    d[feature.name] = res.pvalue
+    print(feature.name + " P-Value :", float(res.pvalue))
+
+d = {key: value for key, value in sorted(d.items(), key=lambda item: item[1])}
+print(d)
+
 # Show outliers using box plot for each feature
 for feature in [trainingData.iloc[:,i] for i in range(4,15)]:
     boxPlot(feature, feature.name, "value")
@@ -57,7 +65,7 @@ eigenValues = pca.explained_variance_
 print("The percentage of coverage using Y1 and Y2",sum(eigenValues[0:2]) / sum(eigenValues))
 
 components_df = pd.DataFrame(data = components, columns = ["y"+str(i) for i in range(1, len(eigenValues)+1)])
-sns.scatterplot(components_df['y1'], components_df['y2'], c=coronaCases, edgecolor="none", alpha=0.8, cmap=plt.cm.get_cmap("viridis", 3))
+sns.scatterplot(components_df['y1'], components_df['y2'], c=coronaCases, edgecolor="none", alpha=0.8, cmap=plt.cm.get_cmap("viridis", 5))
 plt.show()
 
 # find the dissimilarity between tuples
